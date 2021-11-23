@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <button class="btn btn-success" name="add" id="add" onclick="add()">Add new</button>
+    <br/>
+    <br/>
+    <label>Office workers:</label>
+    <form action="/edit" method="post">
+        <table class="table" id="table">
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>
+                        <button name="_id" id="_id" value="{{ user.id }}">Update</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" name="delete" id="delete" form value="{{ user.id }}"
+                                onclick="delete_(this)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+
+
+    <script>
+        function add() {
+            fetch("/add").then(response => response.json()).then(user => {
+                let table = document.getElementById('table')
+                let row = table.insertRow(-1)
+
+                row.innerHTML = `
+                        <td>${user.name}</td>
+                        <td>${user.phone}</td>
+                        <td>
+                        <button name="_id" id="_id" value=${user._id}>Update</button>
+                        </td>
+                        <td>
+                        <button class="btn btn-danger" name="delete" id="delete" form value=${user._id} onclick="delete_(this)">Delete</button>
+                        </td>`
+            })
+
+        }
+
+        function delete_(target) {
+            fetch(`/delete?id=${target.value}`)
+            target.closest('tr').remove()
+        }
+    </script>
+
+
+{% endblock content %}

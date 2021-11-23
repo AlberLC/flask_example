@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <div style="text-align:center">
+        <h1>Worker information</h1>
+        <br/>
+        <br/>
+        <form class="form-horizontal" role="form" action="/update" method="post">
+            <input type="hidden" name="_id" id="_id" value="{{ user.id }}"/>
+            <label>Name:</label>
+            <br/>
+            <input type="text" name="name" id="name" value="{{ user.name }}"/>
+            <br/>
+            <br/>
+            <label>Phone number:</label>
+            <br/>
+            <input type="text" name="phone" id="phone" value="{{ user.phone }}"/>
+            <br/>
+            <br/>
+            <button class="btn btn-success">Save</button>
+            {% if user.id %}
+                <button class="btn btn-danger" name="delete" id="delete" form value="{{ user.id }}"
+                        onclick="delete_(this)">
+                    Delete
+                </button>
+            {% endif %}
+        </form>
+    </div>
+
+    <script>
+        function delete_(target) {
+            fetch(`/delete?id=${target.value}`).then(_ => window.location.href = '/list')
+        }
+    </script>
+
+{% endblock content %}

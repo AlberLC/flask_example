@@ -1,0 +1,16 @@
+services:
+  flask:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_ADDRESS=0.0.0.0
+      - MONGO_ADDRESS=mongodb
+
+  mongodb:
+    image: mongo
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
