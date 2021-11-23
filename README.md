@@ -2,7 +2,7 @@
 A simple app made with Flask, MongoDB and Docker Compose.
 
 ## Installation
-There are two versions. One with the fair requirements and another using the ODM that I did a few days ago.
+There are two versions. One with the just requirements and another using the ODM that I did a few days ago.
 
 Just do `docker-compose up` on each folder separately.
 
